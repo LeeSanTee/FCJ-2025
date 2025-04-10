@@ -35,8 +35,8 @@ Resources:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: "10.0.0.0/16"
-      EnableDnsSupport: "true"
-      EnableDnsHostnames: "true"
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
       InstanceTenancy: default
       Tags:
         - Key: Name
@@ -347,8 +347,8 @@ Resources:
       SecurityGroupIngress:
         - IpProtocol: icmp
           CidrIp: 0.0.0.0/0
-          FromPort: "-1"
-          ToPort: "-1"
+          FromPort: -1
+          ToPort: -1
 
   # EC2
   VpcNetworkPublicServerEc2:
@@ -421,8 +421,8 @@ Resources:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: "10.1.0.0/16"
-      EnableDnsSupport: "true"
-      EnableDnsHostnames: "true"
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
       InstanceTenancy: default
       Tags:
         - Key: Name
@@ -675,11 +675,11 @@ Resources:
       SecurityGroupIngress:
         - IpProtocol: icmp
           CidrIp: 0.0.0.0/0
-          FromPort: "-1"
-          ToPort: "-1"
+          FromPort: -1
+          ToPort: -1
         - IpProtocol: tcp
-          FromPort: "5201"
-          ToPort: "5201"
+          FromPort: 5201
+          ToPort: 5201
           CidrIp: 10.0.0.0/8
 
   # EC2
@@ -708,8 +708,8 @@ Resources:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: "10.2.0.0/16"
-      EnableDnsSupport: "true"
-      EnableDnsHostnames: "true"
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
       InstanceTenancy: default
       Tags:
         - Key: Name
@@ -962,8 +962,8 @@ Resources:
       SecurityGroupIngress:
         - IpProtocol: icmp
           CidrIp: 0.0.0.0/0
-          FromPort: "-1"
-          ToPort: "-1"
+          FromPort: -1
+          ToPort: -1
 
   ServerEc2VpcWorkload:
     Type: AWS::EC2::Instance
@@ -1037,14 +1037,14 @@ Outputs:
       Name: !Sub "VpcNetworkPublicRouteTable"
 
   # VPC Operation Outputs
-  VPCOperation:
+  VpcOperation:
     Description: "The Created VPC"
-    Value: !Ref VPCOperation
+    Value: !Ref VpcOperation
     Export:
       Name: !Sub "VpcOperation-${AWS::StackName}-VPC"
-  ServerVPCOperation:
-    Description: "VPCOperation1 EC2 IP address"
-    Value: !GetAtt ServerEc2VPCOperation.PrivateIp
+  ServerVpcOperation:
+    Description: "VpcOperation1 EC2 IP address"
+    Value: !GetAtt ServerEc2VpcOperation.PrivateIp
     Export:
       Name: !Sub "VpcOperation-${AWS::StackName}-ServerIP"
   DatabaseSubnet1VpcOperation:

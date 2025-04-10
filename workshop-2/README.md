@@ -1,18 +1,18 @@
-# Setting Up AWS Transit Gateway
+# [Workshop 2] Setting Up AWS Transit Gateway + AWS EKS
 
 ## Introduction
 
-Welcome to the guide on setting up AWS Transit Gateway, your key to streamlining VPC connectivity in the cloud. This README provides a concise overview of the steps detailed in [Centralizing Cloud Networks: A Practical Guide to Deploying AWS Transit Gateway](https://medium.com/@kevinkiruri/centralizing-cloud-networks-a-practical-guide-to-deploying-aws-transit-gateway-d97e7f64a03b), authored by [Kevin Kiruri](https://www.linkedin.com/in/kevin-kiruri/).
+Welcome to the guide on setting up AWS Transit Gateway and AWS EKS, your key to understand popular enterpise architecture. This README provides a concise overview of the steps detailed in [A Practical Guide to Deploying AWS Transit Gateway and EKS](https://google.com), authored by [Lee Wook ANh](https://www.linkedin.com/in/leewookanh/).
 
 ## Prerequisites
 
-Before diving into the setup of AWS Transit Gateway, ensure you have the following prerequisites in place:
+Before diving into the setup of AWS Transit Gateway and AWS EKS, ensure you have the following prerequisites in place:
 
 1. **AWS Account:** You'll need an AWS account. If you don't have one, sign up for a Free-Tier Account.
 
 2. **Project Files:** Access project files in the author's GitHub portfolio.
 
-3. **CloudFormation Templates:** Install the provided [CloudFormation templates](.) to create IAM roles, EC2 instances, Flow Logs, and S3 Buckets, as well as the VPCs.
+3. **CloudFormation Templates:** Install the provided [CloudFormation templates](./pre-requisites.yaml) to create IAM roles, EC2 instances, Flow Logs, and S3 Buckets, as well as the VPCs.
 
 
 ## Getting Started
@@ -35,4 +35,4 @@ In summary, AWS Transit Gateway offers a modern, user-friendly, and efficient so
 
 ---
 
-Author: [Kevin Kiruri](https://www.linkedin.com/in/kevin-kiruri/)
+Author: [Lee Wook Anh](https://www.linkedin.com/in/leewookanh/)
