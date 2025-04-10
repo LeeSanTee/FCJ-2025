@@ -10,14 +10,12 @@ Before diving into the setup of AWS Transit Gateway and AWS EKS, ensure you have
 
 1. **AWS Account:** You'll need an AWS account. If you don't have one, sign up for a Free-Tier Account.
 
-2. **Project Files:** Access project files in the author's GitHub portfolio.
-
-3. **CloudFormation Templates:** Install the provided [CloudFormation templates](./pre-requisites.yaml) to create IAM roles, EC2 instances, Flow Logs, and S3 Buckets, as well as the VPCs.
+2. **CloudFormation Templates:** Install the provided [CloudFormation templates](./pre-requisites.yaml) to create IAM roles, EC2 instances, Flow Logs, and S3 Buckets, as well as the VPCs.
 
 
 ## Getting Started
 
-Let's initiate the setup process for AWS Transit Gateway:
+Let's initiate the setup process for AWS Transit Gateway + AWS EKS:
 
 1. **Create Transit Gateway:** In the AWS VPC dashboard, initiate the creation of a Transit Gateway. This central hub connects and streamlines your Virtual Private Clouds (VPCs).
 
@@ -25,9 +23,11 @@ Let's initiate the setup process for AWS Transit Gateway:
 
 3. **Configure Routing:** Ensure that traffic flows smoothly between your VPCs by setting up appropriate routing. This step is crucial for effective network connectivity.
 
-4. **Verify Connectivity:** After completing the setup, it's essential to check the connections between your VPCs. Confirm that instances within different VPCs can communicate effectively using the ping utility.
+4. **Create EKS:**
 
-5. **Clean Up:** After successful testing and when no longer needed, remove Transit Gateway attachments and the Transit Gateway itself to avoid unnecessary costs.
+5. **Deploy a microserice app:** Deploy the provided [web-based e-commerce app](https://github.com/GoogleCloudPlatform/microservices-demo) where users can browse items, add them to the cart, and purchase them.  
+
+6. **Clean Up:** After successful testing and when no longer needed, remove Transit Gateway attachments and the Transit Gateway itself to avoid unnecessary costs.
 
 ## Conclusion
 

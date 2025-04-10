@@ -21,7 +21,7 @@ Parameters:
     Default: us-east-1b
   Ec2KeyPair:
     Description: Share EC2 Key Pair
-    Type: AWS::EC2::KeyPair
+    Type: AWS::EC2::KeyPair::KeyName
     Default: leesantee-key
   AMI:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
