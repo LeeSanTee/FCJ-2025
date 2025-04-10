@@ -103,7 +103,7 @@ Resources:
       - VpcNetwork
     Properties:
       AvailabilityZone: !Ref AvailabilityZoneA
-      CidrBlock: "10.0.1.0/20"
+      CidrBlock: "10.0.16.0/20"
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
