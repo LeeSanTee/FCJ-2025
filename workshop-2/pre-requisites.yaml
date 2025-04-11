@@ -59,7 +59,7 @@ Resources:
   GatewayEndpointBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub 'leesantee-workshop-1-${AWS::Region}-${AWS::AccountId}'
+      BucketName: !Sub 'leesantee-workshop-2-${AWS::Region}-${AWS::AccountId}'
       LifecycleConfiguration:
         Rules:
           - ExpirationInDays: 3
