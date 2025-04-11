@@ -5,7 +5,7 @@ Resources:
   EC2Role:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: "LeeSanTeeWorkshop1EC2Role"
+      RoleName: "LeeSanTeeWorkshop2EC2Role"
       Path: "/"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
@@ -23,7 +23,7 @@ Resources:
   EC2InstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties:
-      InstanceProfileName: "LeeSanTeeWorkshop1InstanceProfile"
+      InstanceProfileName: "LeeSanTeeWorkshop2InstanceProfile"
       Path: "/"
       Roles:
         - !Ref EC2Role
@@ -31,7 +31,7 @@ Resources:
   FlowLogsRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: LeeSanTeeWorkshop1FlowLogsRole
+      RoleName: LeeSanTeeWorkshop2FlowLogsRole
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
