@@ -1,0 +1,36 @@
+project_name: LeeSanTee
+aws_region: us-east-1
+master_prefix: shared-services
+application: demo-microservices
+environment: test
+
+# assume_role: arn:aws:iam::111222333444:role/AWSAFTExecution
+# network_account_assume_role: arn:aws:iam::222333444555:role/AWSAFTExecution
+
+# assume_role: arn:aws:iam::340396142553:role/AWSAFTExecution
+# network_account_assume_role: arn:aws:iam::058731629002:role/AWSAFTExecution
+
+account_name: shared-infra
+account_id: 604928740921
+profile: np-leesantee
+# profile: leesantee
+
+vpc: 
+  name: vpc-workshop-2
+  description: "VPC for Workshop 2"
+  cidr: "10.0.0.0/16"
+  azs:             ["us-east-1a", "us-east-1b"]
+  private_subnets: ["10.0.1.0/24", "10.0.2.0/24"]
+  public_subnets:  ["10.0.101.0/24", "10.0.102.0/24"]
+
+r53:
+  domain_nonprod_cloud_zone_id: Z0814976UUZ14LFIBABU
+  domain_nonprod_in_zone_id: Z041299423VBALNWSHCDZ
+  domain_cloud_nonprod: nonprod.galaxyfinx.cloud
+  domain_in_nonprod: nonprod.galaxyfinx.in
+
+tags:
+  environment: Test
+  application: demo-microservices
+  owner: LeeSanTee
+  terraform: "True"

@@ -1,37 +1,103 @@
-# [Workshop 2] Setting Up AWS Transit Gateway + AWS EKS
+# [Workshop 2] AWS EKS in the world of microservices
 
 ## Introduction
 
-Welcome to the guide on setting up AWS Transit Gateway and AWS EKS, your key to understand popular enterpise architecture. This README provides a concise overview of the steps detailed in [A Practical Guide to Deploying AWS Transit Gateway and EKS](https://google.com), authored by [Lee Wook ANh](https://www.linkedin.com/in/leewookanh/).
+Google's [microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo) (also known as "Online Boutique") is a popular cloud-native e-commerce application consisting of 11 microservices. Deploying it on AWS EKS (Elastic Kubernetes Service) demonstrates modern container orchestration in a cloud environment, authored by [Lee Wook ANh](https://www.linkedin.com/in/leewookanh/).
 
+
+
+
+# TODO: Write doc
 ## Prerequisites
 
-Before diving into the setup of AWS Transit Gateway and AWS EKS, ensure you have the following prerequisites in place:
+Before provisioning an Amazon EKS cluster using Terragrunt and Terraform, ensure you have the following prerequisites in place:
 
-1. **AWS Account:** You'll need an AWS account. If you don't have one, sign up for a Free-Tier Account.
+1. **AWS Account:** You'll need an AWS account with appropriate IAM permissions to create EKS clusters, VPCs, and other related resources.
 
-2. **CloudFormation Templates:** Install the provided [CloudFormation templates](./pre-requisites.yaml) to create IAM roles, EC2 instances, Flow Logs, and S3 Buckets, as well as the VPCs.
+2. **AWS CLI:** Install and configure the [AWS CLI](https://aws.amazon.com/cli/) with your credentials.
 
+3. **kubectl:** Install [kubectl](https://kubernetes.io/docs/tasks/tools/), the Kubernetes command-line tool.
+
+4. **Terraform & Terragrunt:** Install [Terraform](https://www.terraform.io/downloads) and [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/).
+
+5. **Helm:** Install [Helm](https://helm.sh/docs/intro/install/), the Kubernetes package manager.
+
+6. **Git:** Ensure Git is installed for cloning repositories.
 
 ## Getting Started
 
-Let's initiate the setup process for AWS Transit Gateway + AWS EKS:
+Follow these steps to provision an EKS cluster and deploy a sample microservices application:
 
-1. **Create Transit Gateway:** In the AWS VPC dashboard, initiate the creation of a Transit Gateway. This central hub connects and streamlines your Virtual Private Clouds (VPCs).
+1. **Clone the repository:**  
+```bash
+   git clone [FCJ-2025](https://github.com/LeeSanTee/FCJ-2025.git)
+   cd workshop-2
+```
 
-2. **Attach VPCs:** Connect your VPCs to the Transit Gateway. Each VPC receives a dedicated subnet within the Transit Gateway to facilitate seamless communication.
+2 **Create a VPC:**
+```
+    cd terrgrunt/vpc
+    terragrunt apply
+```
 
-3. **Configure Routing:** Ensure that traffic flows smoothly between your VPCs by setting up appropriate routing. This step is crucial for effective network connectivity.
+3. **Create an EKS Cluster:**
+```bash
+   cd terragrunt/eks
+   terragrunt apply
+```
 
-4. **Create EKS:**
+4. **Configure kubectl:**
+```bash
+   aws eks --region <your-region> update-kubeconfig --name <your-cluster-name>
+```
 
-5. **Deploy a microserice app:** Deploy the provided [web-based e-commerce app](https://github.com/GoogleCloudPlatform/microservices-demo) where users can browse items, add them to the cart, and purchase them.  
+5.1 **Deploy the microservices application:**
+```bash
+   kubectl apply -f ./demo-microservice/kubectl
+```
 
-6. **Clean Up:** After successful testing and when no longer needed, remove Transit Gateway attachments and the Transit Gateway itself to avoid unnecessary costs.
+5.2 **Deploy the microservices application using Helm:**
+```bash
+   cd demo-microservice/helm-chart
+   helm install microservices-demo . -f values.yaml
+```
+
+6. **Access the application:**  
+   After deployment, you can access the application using the LoadBalancer URL provided by the EKS service. Use the following command to get the URL:
+```bash
+   kubectl get svc frontend -n default
+```
+## Testing the Application
+To test the deployed microservices application, follow these steps:
+1. **Access the Application:**  
+   Open a web browser and navigate to the LoadBalancer URL obtained in the previous step. You should see the e-commerce application interface.
+2. **Browse Products:**
+   Explore the available products, view details, and add items to your cart.
+3. **Add to Cart:**
+   Select products and add them to your shopping cart.
+4. **Checkout:**
+   Proceed to checkout, where you can simulate a purchase by entering dummy payment information.
+5. **Monitor Logs:**
+   Use the following command to monitor logs for the frontend service:
+```bash
+   kubectl logs -f deployment/frontend -n default
+```
+## Clean Up
+After successful testing and when no longer needed, you can clean up the resources to avoid unnecessary costs:
+1. **Delete the EKS Cluster:**
+```bash
+   cd terragrunt/eks
+   terragrunt destroy
+```
+
+2. **Delete the VPC:**
+```bash
+   cd terragrunt/vpc
+   terragrunt destroy
+```
 
 ## Conclusion
-
-In summary, AWS Transit Gateway offers a modern, user-friendly, and efficient solution for managing cloud network connections. By centralizing your network infrastructure, you gain greater flexibility and ease of management, simplifying the complexities associated with VPC peering. Embrace the future of cloud networking with Transit Gateway, and make your cloud journey smoother and more efficient.
+In summary, AWS EKS provides a powerful platform for deploying and managing microservices applications in a cloud-native environment. By leveraging Kubernetes, you can achieve scalability, resilience, and efficient resource utilization. The provided steps guide you through the process of setting up an EKS cluster and deploying a sample microservices application, showcasing the capabilities of modern container orchestration.
 
 ---
 
