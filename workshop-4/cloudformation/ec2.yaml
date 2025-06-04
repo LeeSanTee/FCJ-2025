@@ -1,0 +1,173 @@
+Description: "[Workshop2] Create EC2 in VPC Network, VPC Operation and VPC Workload"
+
+Metadata:
+  "AWS::CloudFormation::Interface":
+    ParameterGroups:
+      - Label:
+          default: "EC2 Parameters"
+        Parameters:
+          - Ec2KeyPair
+
+Parameters:
+  Ec2KeyPair:
+    Description: Share EC2 Key Pair
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: leesantee-key
+  AMI:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Description: 'The ID of the AMI.'
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64
+
+Resources:
+##########################
+# VPC Network Resources
+
+  # Security Group
+  VpcNetworkEc2SecGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Open-up ports for ICMP
+      GroupName: "VPC Network Security Group"
+      VpcId: vpc-06f26cc0d309b0d69
+      SecurityGroupIngress:
+        - IpProtocol: icmp
+          CidrIp: 0.0.0.0/0
+          FromPort: -1
+          ToPort: -1
+
+  # EC2
+  VpcNetworkPublicServerEc2:
+    Type: AWS::EC2::Instance
+    Properties:
+      IamInstanceProfile: "LeeSanTeeWorkshop2InstanceProfile"
+      ImageId: !Ref AMI
+      KeyName: !Ref Ec2KeyPair
+      InstanceType: t2.micro
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: "0"
+          GroupSet:
+            - !Ref VpcNetworkEc2SecGroup
+          PrivateIpAddress: 10.0.32.100
+          # SubnetId: !Ref VpcNetworkPublicSubnet2
+          SubnetId: subnet-0f442a16d71829880
+      Tags:
+        - Key: Name
+          Value: "VPC Network Public AZ2 Server"
+
+  VpcNetworkPrivateServerEc2:
+    Type: AWS::EC2::Instance
+    Properties:
+      # SubnetId: !Ref VpcNetworkPrivateSubnet1
+      SubnetId: subnet-0ebf8246c9a2fb4a4
+      ImageId: !Ref AMI
+      KeyName: !Ref Ec2KeyPair
+      InstanceType: t2.micro
+      PrivateIpAddress: 10.0.16.100
+      SecurityGroupIds:
+        - Ref: VpcNetworkEc2SecGroup
+      IamInstanceProfile: "LeeSanTeeWorkshop2InstanceProfile"
+      Tags:
+        - Key: Name
+          Value: "VPC Network Private AZ1 Server"
+
+##########################
+# VPC Operation Resources
+
+  # Security Group
+  VpcOperationEc2SecGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Open-up ports for ICMP from 10.x.x.x
+      GroupName: "VPC Operation Security Group"
+      VpcId: vpc-05376ee4e28296fd1
+      SecurityGroupIngress:
+        - IpProtocol: icmp
+          CidrIp: 0.0.0.0/0
+          FromPort: -1
+          ToPort: -1
+        - IpProtocol: tcp
+          FromPort: 5201
+          ToPort: 5201
+          CidrIp: 10.0.0.0/8
+
+  # EC2
+  ServerEc2VpcOperation:
+    Type: AWS::EC2::Instance
+    Properties:
+      SubnetId: subnet-05848ec9c9e9a901d
+        # Ref: PrivateSubnet1VpcOperation
+      ImageId: !Ref AMI
+      KeyName: !Ref Ec2KeyPair
+      InstanceType: t2.micro
+      PrivateIpAddress: 10.1.16.100
+      SecurityGroupIds:
+        - Ref: VpcOperationEc2SecGroup
+      IamInstanceProfile: "LeeSanTeeWorkshop2InstanceProfile"
+      Tags:
+        - Key: Name
+          Value: "VPC Operation Private AZ1 Server"
+
+##########################
+# VPC Workload Resources
+
+  # Security Group 
+  VpcWorkloadEc2SecGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Open-up ports for ICMP from 10.x.x.x
+      GroupName: "VPC Workload Security Group"
+      VpcId: vpc-0595dc16829a2c92d
+      SecurityGroupIngress:
+        - IpProtocol: icmp
+          CidrIp: 0.0.0.0/0
+          FromPort: -1
+          ToPort: -1
+
+  # EC2
+  ServerEc2VpcWorkload:
+    Type: AWS::EC2::Instance
+    Properties:
+      SubnetId: subnet-034b09a20adafb5be
+        # Ref: PrivateSubnet1VpcWorkload
+      ImageId: !Ref AMI
+      InstanceType: t2.micro
+      PrivateIpAddress: 10.2.16.100
+      SecurityGroupIds:
+        - Ref: VpcWorkloadEc2SecGroup
+      IamInstanceProfile: "LeeSanTeeWorkshop2InstanceProfile"
+      Tags:
+        - Key: Name
+          Value: "VPC Workload Private AZ1 Server"
+
+Outputs:
+  # VPC Network Outputs
+  VpcNetworkPublicServerPublicIp:
+    Description: "VPC Network Public EC2 Public IP address"
+    Value: !GetAtt VpcNetworkPublicServerEc2.PublicIp
+    Export:
+      Name: !Sub "VpcNetworkPublicServerPublicIP"
+  VpcNetworkPublicServerPrivateIp:
+    Description: "VPC Network Public EC2 Private IP address"
+    Value: !GetAtt VpcNetworkPublicServerEc2.PrivateIp
+    Export:
+      Name: !Sub "VpcNetworkPublicServerPrivateIP"
+  VpcNetworkPrivateServer:
+    Description: "VPC Network Private EC2 IP address"
+    Value: !GetAtt VpcNetworkPrivateServerEc2.PrivateIp
+    Export:
+      Name: !Sub "VpcNetworkServerIP"
+
+  # VPC Operation Outputs
+  ServerVpcOperation:
+    Description: "VpcOperation1 EC2 IP address"
+    Value: !GetAtt ServerEc2VpcOperation.PrivateIp
+    Export:
+      Name: !Sub "VpcOperation-${AWS::StackName}-ServerIP"
+      
+  # VPC Workload Outputs
+  ServerVpcWorkload:
+    Description: "VpcWorkload EC2 IP address"
+    Value: !GetAtt ServerEc2VpcWorkload.PrivateIp
+    Export:
+      Name: !Sub "VpcWorkload-${AWS::StackName}-ServerIP"

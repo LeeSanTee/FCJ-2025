@@ -1,0 +1,2 @@
+# [Workshop 1] Leverage Transit Gateway in enterprise system
+Blog: [https://leewookanh.notion.site/LeeSanTee-Workshop-1-Leverage-Transit-Gateway-in-enterprise-system-1d4188f32d2780c59e8ef1713bf60460](Go to this link) 
