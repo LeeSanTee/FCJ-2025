@@ -9,8 +9,8 @@ network_account_assume_role: arn:aws:iam::058731629002:role/AWSAFTExecution
 r53:
   domain_nonprod_cloud_zone_id: Z0814976UUZ14LFIBABU
   domain_nonprod_in_zone_id: Z041299423VBALNWSHCDZ
-  domain_cloud_nonprod: nonprod.galaxyfinx.cloud
-  domain_in_nonprod: nonprod.galaxyfinx.in
+  domain_cloud_nonprod: nonprod.leesantee.cloud
+  domain_in_nonprod: nonprod.leesantee.in
 
 transit_gateway:
   tgw_id: tgw-0d3c7660cd4140910
@@ -18,5 +18,5 @@ transit_gateway:
 tags:
   environment: Test
   application: LeeSanTee Test
-  owner: GalaxyFinX
+  owner: LeeSanTee
   terraform: "True"

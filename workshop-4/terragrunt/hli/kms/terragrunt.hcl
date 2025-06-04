@@ -1,5 +1,5 @@
 terraform {
-  source = "git::https://github.com/GalaxyFinX/aws-kms.git?ref=v1.1.1"
+  source = "../../../../terraform-modules/aws-kms "
   extra_arguments "custom_vars" {
     commands = [
       "apply",

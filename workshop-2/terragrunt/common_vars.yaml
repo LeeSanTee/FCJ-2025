@@ -26,8 +26,8 @@ vpc:
 r53:
   domain_nonprod_cloud_zone_id: Z0814976UUZ14LFIBABU
   domain_nonprod_in_zone_id: Z041299423VBALNWSHCDZ
-  domain_cloud_nonprod: nonprod.galaxyfinx.cloud
-  domain_in_nonprod: nonprod.galaxyfinx.in
+  domain_cloud_nonprod: nonprod.leesantee.cloud
+  domain_in_nonprod: nonprod.leesantee.in
 
 tags:
   environment: Test
