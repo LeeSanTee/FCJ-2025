@@ -1,5 +1,3 @@
-./workshop-2/ec2.yaml
-
 # TERRAFORM GITIGNORE
 # Local .terraform directories
 .terraform/
